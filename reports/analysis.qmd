@@ -1,0 +1,97 @@
+---
+title: "Simulated Phase II Trial: Baseline Analysis"
+subtitle: "Clinical-trial conformal portfolio — milestone 1"
+format:
+  html:
+    toc: true
+    embed-resources: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+# Quarto normally executes in reports/; locate the root for either working directory.
+project_root <- if (file.exists("R/config.R")) "." else ".."
+knitr::opts_knit$set(root.dir = normalizePath(project_root))
+```
+
+```{r}
+source("scripts/run_trial.R")
+source("scripts/run_operating_characteristics.R")
+```
+
+## Scope
+
+All records are synthetic. This report demonstrates the first milestone of an
+independent portfolio project. CP is implemented in a separate module; CRC remains planned.
+The endpoint and assumed effect are hypothetical, with no clinical validation.
+
+## Trial design
+
+There are 240 patients, randomized equally to investigational treatment or control.
+The primary endpoint is improvement at week 12; larger values are favorable.
+The intended treatment-policy estimand is the mean randomized-arm difference.
+The initial simulation contains no intercurrent events or missing measurements.
+
+## Sample-size illustration
+
+```{r}
+knitr::kable(read.csv("outputs/sample_size_planning.csv"), digits = 3)
+```
+
+This normal approximation ignores covariate-adjustment gains and has no dropout
+allowance. It is a planning illustration, not a clinical recommendation.
+
+## Baseline characteristics
+
+```{r}
+knitr::kable(read.csv("outputs/baseline_table.csv"), digits = 2)
+```
+
+## Primary efficacy analysis
+
+```{r}
+knitr::kable(read.csv("outputs/efficacy_results.csv"), digits = 4)
+```
+
+The treatment coefficient comes from ANCOVA adjusted for baseline score, age,
+and biomarker. Its confidence interval concerns a mean treatment effect.
+It is not an individual-patient prediction interval.
+
+```{r}
+knitr::include_graphics("outputs/efficacy_plot.png")
+```
+
+## Descriptive safety
+
+```{r}
+knitr::kable(read.csv("outputs/safety_table.csv"), digits = 1)
+```
+
+Events are binary occurrences during follow-up; recurrence and severity are not
+represented. These tables do not establish the safety of a real treatment.
+
+## Repeated simulation
+
+```{r}
+knitr::kable(read.csv("outputs/operating_characteristics.csv"), digits = 4)
+```
+
+Rejection under the null estimates Type I error; rejection under the alternative
+estimates power. Monte Carlo standard errors and intervals quantify simulation
+precision, distinct from confidence intervals for a trial's treatment effect.
+
+## Next milestone
+
+Review the separate arm-specific split conformal experiment, then implement
+adverse-event prediction sets calibrated with CRC. Assess coverage,
+width, expected missed-event fraction, and alert burden. Preserve the distinction
+between these predictive objectives and the trial's efficacy test.
+
+## Reproducibility
+
+```{r}
+sessionInfo()
+```

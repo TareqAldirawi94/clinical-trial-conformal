@@ -1,0 +1,79 @@
+---
+title: "Patient Outcome Prediction: Model-Based and Conformal Intervals"
+format:
+  html:
+    toc: true
+    embed-resources: true
+execute:
+  echo: false
+---
+
+```{r}
+project_root <- if (file.exists("R/config.R")) "." else ".."
+knitr::opts_knit$set(root.dir = normalizePath(project_root))
+```
+
+```{r}
+required <- c("outputs/conformal/repeated_summary.csv", "outputs/conformal/calibration_details.csv",
+              "outputs/conformal/individual_prediction_intervals.png")
+if (!all(file.exists(required))) stop("Run both conformal scripts before rendering this report.")
+results <- read.csv(required[1])
+```
+
+## Design
+
+All observations are synthetic. This experiment uses independent training,
+calibration, and test cohorts, with the same target population within a scenario.
+The shared linear model is fitted using training data only. Conformal calibration
+uses absolute residuals separately in the control and investigational arms.
+The nominal prediction coverage is 90% under the default configuration.
+
+```{r}
+knitr::kable(read.csv("outputs/conformal/repeated_configuration.csv"))
+```
+
+These cohorts are separate from the 240-patient efficacy trial. This comparison
+isolates predictive calibration, not performance achievable from that trial alone.
+
+## Calibration details from the individual run
+
+```{r}
+knitr::kable(read.csv("outputs/conformal/calibration_details.csv"), digits = 3)
+```
+
+## Repeated coverage and width
+
+```{r}
+knitr::kable(results[results$group %in% c("Overall", "Control", "Investigational"), ], digits = 4)
+```
+
+Monte Carlo uncertainty is computed across independent repetitions. Prediction
+coverage concerns future individual outcomes; it is not confidence-interval coverage
+for the mean treatment effect. Standard split conformal validity is marginal over
+calibration and a future patient, within the calibrated arm.
+
+## Biomarker diagnostics
+
+```{r}
+knitr::kable(results[grepl("Biomarker", results$group), ], digits = 4)
+```
+
+These strata were not separately calibrated. Their coverage is a diagnostic and
+is not protected by the arm-specific guarantee. The nonlinear scenario also has
+larger residual variance for patients with positive biomarker values.
+
+## Individual prediction examples
+
+```{r}
+knitr::include_graphics("outputs/conformal/individual_prediction_intervals.png")
+```
+
+The plot shows the first 30 test patients, selected independently of outcomes.
+Green intervals contain the observed outcome; red intervals miss it.
+
+## Limitations and next steps
+
+The first scenario matches the model assumptions; the second violates mean and
+variance assumptions while preserving cohort exchangeability. This is not a
+population-shift study. No superiority is assumed in advance. CRC for adverse-event
+prediction remains a separate planned module. See docs/conformal-results-guide.md.

@@ -1,0 +1,12 @@
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+.DS_Store
+Thumbs.db
+outputs/*
+!outputs/README.md
+reports/*.html
+reports/*_files/
+renv/library/
+renv/staging/

@@ -1,0 +1,32 @@
+[
+  {
+    "file": "cp_summary.csv",
+    "uploaded_name": "repeated_summary.csv",
+    "sha256": "af02943c34a6f519b3bf46f13aeb62032494ae31693d2738388afebe9e17e411",
+    "origin": "Author-supplied R execution output; received 2026-10-24"
+  },
+  {
+    "file": "mondrian_summary.csv",
+    "uploaded_name": "repeated_summary(1).csv",
+    "sha256": "37123bcc0b50084042e948f26e5c04a986430b03c3df06c3a7dd5fd032c98b42",
+    "origin": "Author-supplied R execution output; received 2026-10-24"
+  },
+  {
+    "file": "crc_summary.csv",
+    "uploaded_name": "repeated_summary(2).csv",
+    "sha256": "4fc9b1e1915b68b4cad2d976a7aba0a6d4a6fe06b20ac013b811c783e9649837",
+    "origin": "Author-supplied R execution output; received 2026-10-24"
+  },
+  {
+    "file": "crc_calibration.csv",
+    "uploaded_name": "replicate_calibration(1).csv",
+    "sha256": "83a0d0f27cb6cc097e1f8a5a109b109a90d4dfa50542c32c546f311dfca98483",
+    "origin": "Author-supplied R execution output; received 2026-10-24"
+  },
+  {
+    "file": "mondrian_calibration.csv",
+    "uploaded_name": "replicate_calibration.csv",
+    "sha256": "61900d6106661633762aae14f9b2e8ee11306d94029cb2e3ad303cd07315340f",
+    "origin": "Author-supplied R execution output; received 2026-10-24"
+  }
+]
