@@ -17,7 +17,10 @@ Across 1,000 replications per scenario:
 | Null, effect=0 | 3.8% | 0.60 percentage points | 2.70%–5.18% | 0.0096 | 0.9831 | 96.2% |
 | Alternative, effect=3 | 79.6% | 1.27 percentage points | 76.97%–82.06% | -0.0112 | 1.0738 | 94.3% |
 
-The null rejection rate is compatible with 5% given Monte Carlo uncertainty. The alternative has approximately 80% power under these specific assumptions. The table is produced by `scripts/run_operating_characteristics.R` with 1,000 replications per scenario and committed as `results/reference/efficacy_summary.csv`.
+The null rejection rate is compatible with 5% given Monte Carlo uncertainty. The
+alternative has approximately 80% power under these specific assumptions. The table
+is produced by `scripts/run_operating_characteristics.R` with 1,000 replications per
+scenario and committed as `results/reference/efficacy_summary.csv`.
 
 ## 2. Individual-outcome prediction
 
@@ -49,7 +52,7 @@ fallback when the required conformal rank exceeds the available group count.
 
 Sources: [Mondrian summary](../results/reference/mondrian_summary.csv),
 [calibration records](../results/reference/mondrian_calibration.csv), and
-[original CP summary](../results/reference/cp_summary.csv). Full Monte Carlo
+[CP summary](../results/reference/cp_summary.csv). Full Monte Carlo
 uncertainty is retained in the CSVs.
 
 ## 3. Adverse-event conformal risk control
@@ -97,11 +100,22 @@ Sources: [CRC summary](../results/reference/crc_summary.csv) and
 
 ## 4. Reproducibility and verification
 
-The committed reference files were regenerated from the committed code and compared with the committed versions: the replicate summaries for CRC, Mondrian and conformal prediction, and their calibration records, are byte-identical, including infinite-width cells. The efficacy table reproduces the values reported above. Checks also confirmed calibration sample counts, conformal ranks, threshold mappings, CRC corrections, threshold nesting and the Monte Carlo interval arithmetic. The CI workflow runs short simulations for integration checks only; it is not the source of the 200-replication reference results. Run `scripts/compare_to_reference.R` after the repeated experiments to repeat the comparison.
+The committed reference files were regenerated from the committed code and compared
+with the committed versions: the replicate summaries for CRC, Mondrian and conformal
+prediction, and their calibration records, are byte-identical, including
+infinite-width cells. The efficacy table reproduces the values reported above.
+Checks also confirmed calibration sample counts, conformal ranks, threshold
+mappings, CRC corrections, threshold nesting and the Monte Carlo interval
+arithmetic. The CI workflow runs short simulations for integration checks only; it
+is not the source of the 200-replication reference results. Run
+`scripts/compare_to_reference.R` after the repeated experiments to repeat the
+comparison.
 
 ## 5. Scope of the portfolio
 
 The project demonstrates analysis planning, randomized-trial simulation, adjusted
 effect estimation, operating characteristics, independent prediction calibration,
-subgroup diagnostics and reproducible programming. It does not establish efficacy or safety of a real treatment or readiness for regulatory use. Phase I dose finding, Phase III multiplicity, missing outcomes,
-severity-weighted losses and real-data validation remain outside this release.
+subgroup diagnostics and reproducible programming. It does not establish efficacy or
+safety of a real treatment or readiness for regulatory use. Phase I dose finding,
+Phase III multiplicity, missing outcomes, severity-weighted losses and real-data
+validation remain outside this release.
