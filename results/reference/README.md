@@ -1,18 +1,19 @@
 # Reference simulation outputs
 
-These are unchanged CSV outputs supplied by the project author from local R runs
-and reviewed on 2026-10-24. `provenance.json` records original upload names and
-SHA-256 checksums. They are snapshots, not outputs from a new execution here.
+Reference summaries produced by the scripts in `scripts/`, run on R 4.6.1
+(Windows). Each file was regenerated on 2026-11-03 and is byte-identical to the
+committed version; `provenance.json` records the generating script and the
+SHA-256 checksum of each file. `scripts/compare_to_reference.R` repeats the
+comparison against fresh output.
 
 - cp_summary.csv: two scenarios, two methods, 200 replications each, n_cal=400.
 - mondrian_summary.csv: three methods and n_cal=40,100,400, 200 replications.
 - crc_summary.csv: three methods and n_cal=40,100,400, 200 replications.
+- efficacy_summary.csv: null and alternative scenarios, 1,000 replications each.
 - *_calibration.csv: calibration records supporting threshold and rank checks.
 
 Training n=1000 and test n=2000 for predictive experiments. Summary files retain
-Monte Carlo uncertainty. Clinical efficacy operating characteristics are reported
-in the results narrative from console output; their original CSV is not included.
-Patient-level predictions are excluded from this committed reference snapshot.
+Monte Carlo uncertainty. Patient-level predictions are not committed.
 
 Rerunning analyses writes to outputs/, leaving these reference files unchanged.
 Review fresh results before deliberately replacing any reference snapshot.
