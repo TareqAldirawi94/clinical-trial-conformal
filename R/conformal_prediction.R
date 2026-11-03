@@ -1,9 +1,10 @@
 # Arm-specific split conformal prediction. Functions do not change directories.
+conformal_rank <- function(n, alpha) ceiling((n + 1) * (1 - alpha) - 1e-9)
 conformal_radius <- function(scores, alpha = 0.10) {
   stopifnot(is.numeric(scores), all(is.finite(scores)), all(scores >= 0),
             length(alpha) == 1L, is.finite(alpha), alpha > 0, alpha < 1)
   n <- length(scores)
-  k <- ceiling((n + 1) * (1 - alpha))
+  k <- conformal_rank(n, alpha)
   # Add an infinity atom implicitly; never truncate k to n or interpolate.
   if (k > n) return(Inf)
   sort(scores, partial = k)[k]
@@ -23,7 +24,7 @@ calibrate_by_arm <- function(model, calibration, alpha = 0.10) {
   do.call(rbind, lapply(0:1, function(a) {
     arm_scores <- scores[calibration$treatment == a]
     data.frame(treatment = a, n_cal = length(arm_scores), alpha = alpha,
-               rank = ceiling((length(arm_scores) + 1) * (1 - alpha)),
+               rank = conformal_rank(length(arm_scores), alpha),
                radius = conformal_radius(arm_scores, alpha))
   }))
 }
