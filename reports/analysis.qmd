@@ -1,6 +1,6 @@
 ---
 title: "Simulated Phase II Trial: Baseline Analysis"
-subtitle: "Clinical-trial conformal portfolio — milestone 1"
+subtitle: "Clinical-trial conformal portfolio, trial analysis module"
 format:
   html:
     toc: true
@@ -24,9 +24,11 @@ source("scripts/run_operating_characteristics.R")
 
 ## Scope
 
-All records are synthetic. This report demonstrates the first milestone of an
-independent portfolio project. CP is implemented in a separate module; CRC remains planned.
-The endpoint and assumed effect are hypothetical, with no clinical validation.
+All records are synthetic. This report covers the standard trial analysis module of
+an independent portfolio project. Split conformal prediction, Mondrian prediction
+and conformal risk control for adverse events are implemented in separate modules
+and reported in `reports/results.md`. The endpoint and assumed effect are
+hypothetical, with no clinical validation.
 
 ## Trial design
 
@@ -41,8 +43,11 @@ The initial simulation contains no intercurrent events or missing measurements.
 knitr::kable(read.csv("outputs/sample_size_planning.csv"), digits = 3)
 ```
 
-This normal approximation ignores covariate-adjustment gains and has no dropout
-allowance. It is a planning illustration, not a clinical recommendation.
+The unadjusted column uses a normal approximation with the total outcome standard
+deviation, ignoring covariate adjustment. The covariate-adjusted column uses the
+residual standard deviation, which is appropriate for the ANCOVA analysis. The
+planned 120 patients per arm lies between the two. Neither calculation includes a
+dropout allowance. This is a planning illustration, not a clinical recommendation.
 
 ## Baseline characteristics
 
@@ -83,12 +88,12 @@ Rejection under the null estimates Type I error; rejection under the alternative
 estimates power. Monte Carlo standard errors and intervals quantify simulation
 precision, distinct from confidence intervals for a trial's treatment effect.
 
-## Next milestone
+## Related analyses
 
-Review the separate arm-specific split conformal experiment, then implement
-adverse-event prediction sets calibrated with CRC. Assess coverage,
-width, expected missed-event fraction, and alert burden. Preserve the distinction
-between these predictive objectives and the trial's efficacy test.
+Prediction intervals for individual outcomes (arm-specific split conformal and
+Mondrian) and adverse-event prediction sets calibrated with conformal risk control
+are reported in `reports/results.md`. Those predictive objectives are distinct from
+the trial's efficacy test and use separate training, calibration and test cohorts.
 
 ## Reproducibility
 
