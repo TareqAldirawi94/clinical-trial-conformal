@@ -12,8 +12,8 @@ stopifnot(identical(missed_event_loss(y, s), c(0.5, 0)))
 y <- matrix(0, 10, 5); y[, 1] <- 1
 prob <- matrix(0, 10, 5); prob[, 1] <- c(0.1, rep(0.9, 9))
 e <- select_ae_threshold(prob, y, method = "Empirical", grid = c(0, 0.2, 0.95, 1))
-c <- select_ae_threshold(prob, y, method = "CRC", grid = c(0, 0.2, 0.95, 1))
-stopifnot(e$lambda == 0.2, c$lambda == 0.95, c$corrected_risk <= 0.1)
+crc <- select_ae_threshold(prob, y, method = "CRC", grid = c(0, 0.2, 0.95, 1))
+stopifnot(e$lambda == 0.2, crc$lambda == 0.95, crc$corrected_risk <= 0.1)
 # n=8 cannot satisfy the corrected criterion at alpha=.1, even with zero loss.
 z <- select_ae_threshold(prob[1:8, ], y[1:8, ])
 stopifnot(z$lambda == 1, z$safe_all_labels_fallback)
