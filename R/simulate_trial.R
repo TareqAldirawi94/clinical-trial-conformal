@@ -4,6 +4,12 @@ simulate_trial <- function(n = 240L, effect = 3, residual_sd = 8,
   stopifnot(length(n) == 1L, is.finite(n), n >= 20, n %% 2 == 0,
             length(effect) == 1L, is.finite(effect),
             length(residual_sd) == 1L, is.finite(residual_sd), residual_sd > 0)
+    if (exists(".Random.seed", envir = globalenv())) {
+    old_seed <- get(".Random.seed", envir = globalenv())
+    on.exit(assign(".Random.seed", old_seed, envir = globalenv()), add = TRUE)
+  } else {
+    on.exit(rm(".Random.seed", envir = globalenv()), add = TRUE)
+  }
   set.seed(seed)
   age <- pmin(80, pmax(18, rnorm(n, 55, 12)))
   baseline_score <- rnorm(n, 50, 10)
