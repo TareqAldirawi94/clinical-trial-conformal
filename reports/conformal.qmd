@@ -71,9 +71,12 @@ knitr::include_graphics("outputs/conformal/individual_prediction_intervals.png")
 The plot shows the first 30 test patients, selected independently of outcomes.
 Green intervals contain the observed outcome; red intervals miss it.
 
-## Limitations and next steps
+## Limitations and related analyses
 
 The first scenario matches the model assumptions; the second violates mean and
 variance assumptions while preserving cohort exchangeability. This is not a
-population-shift study. No superiority is assumed in advance. CRC for adverse-event
-prediction remains a separate planned module. See docs/conformal-results-guide.md.
+population-shift study. No superiority is assumed in advance. Four-cell Mondrian
+calibration, which addresses the biomarker subgroup undercoverage shown above, and
+conformal risk control for adverse-event prediction sets are implemented in separate
+modules and reported in `reports/results.md`. See `docs/conformal-specification.md`
+and `docs/mondrian-guide.md`.
