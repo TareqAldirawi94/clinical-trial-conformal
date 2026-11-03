@@ -2,7 +2,7 @@
 ae_columns <- paste0("ae_", c("nausea", "fatigue", "rash", "diarrhea", "headache"))
 ae_predictors <- c("treatment", "age", "baseline_score", "biomarker")
 check_ae_matrix <- function(x, probabilities = FALSE) {
-  stopifnot(is.matrix(x), is.numeric(x) || is.logical(x), ncol(x) == 5L,
+  stopifnot(is.matrix(x), is.numeric(x) || is.logical(x), ncol(x) == length(ae_columns),
             all(is.finite(x)), all(x >= 0 & x <= 1))
   if (!probabilities) stopifnot(all(x %in% c(0, 1)))
 }
@@ -37,7 +37,7 @@ predict_ae <- function(models, newdata) {
     if (m$fallback) rep(m$constant, nrow(x)) else
       as.numeric(predict(m$fit, newdata = x, type = "response"))
   }, numeric(nrow(x)))
-  ans <- matrix(ans, nrow = nrow(x), ncol = 5,
+  ans <- matrix(ans, nrow = nrow(x), ncol = length(ae_columns),
                 dimnames = list(NULL, ae_columns))
   check_ae_matrix(ans, TRUE)
   ans
@@ -102,7 +102,7 @@ evaluate_ae_sets <- function(y, sets, patients, method) {
     data.frame(method = method, group = g, n_test = length(i),
       risk = if (length(i)) mean(loss[i]) else NA_real_,
       mean_set_size = if (length(i)) mean(rowSums(sets[i, , drop = FALSE])) else NA_real_,
-      all_labels_fraction = if (length(i)) mean(rowSums(sets[i, , drop = FALSE]) == 5) else NA_real_,
+      all_labels_fraction = if (length(i)) mean(rowSums(sets[i, , drop = FALSE]) == length(ae_columns)) else NA_real_,
       no_event_fraction = if (length(i)) mean(!event) else NA_real_,
       event_positive_risk = if (any(event)) mean(loss[i][event]) else NA_real_)
   }))

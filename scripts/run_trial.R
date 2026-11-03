@@ -20,9 +20,14 @@ write.csv(safety_table(data), "outputs/safety_table.csv", row.names = FALSE)
 outcome_sd <- sqrt(cfg$residual_sd^2 + 0.25^2 * 10^2 + 0.8^2 + 0.03^2 * 12^2)
 per_arm <- ceiling(2 * (qnorm(1 - cfg$test_alpha / 2) +
                          qnorm(cfg$target_power))^2 * outcome_sd^2 / cfg$effect^2)
+adjusted_per_arm <- ceiling(2 * (qnorm(1 - cfg$test_alpha / 2) +
+                                   qnorm(cfg$target_power))^2 * cfg$residual_sd^2 / cfg$effect^2)
 write.csv(data.frame(effect = cfg$effect, planning_sd = outcome_sd,
+                     residual_sd = cfg$residual_sd,
                      alpha = cfg$test_alpha, power = cfg$target_power,
-                     approximate_n_per_arm = per_arm, planned_total_n = cfg$n),
+                     unadjusted_n_per_arm = per_arm,
+                     covariate_adjusted_n_per_arm = adjusted_per_arm,
+                     planned_total_n = cfg$n),
           "outputs/sample_size_planning.csv", row.names = FALSE)
 png("outputs/efficacy_plot.png", width = 1000, height = 700, res = 130)
 boxplot(improvement_week12 ~ factor(treatment, levels = 0:1,
