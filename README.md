@@ -66,7 +66,7 @@ Results are written to `outputs/`. Seeds are recorded in the scripts and generat
 
 The simulation represents a hypothetical Phase II setting. It does not implement Phase I dose escalation, Phase III confirmatory multiplicity, real patient data, missing-data sensitivity analyses or a regulatory submission workflow. Predictive experiments use 1,000 training and 2,000 test patients plus separate calibration cohorts; these are not all drawn from the 240-person efficacy trial.
 
-All reference results in `results/reference/` were regenerated from the committed code on R 4.6.1 (2026-06-24, Windows) on 2026-11-03 and are byte-identical to the committed CSVs. The efficacy operating-characteristics table was regenerated the same way and is committed as `efficacy_summary.csv`. Run `scripts/run_all_checks.R` to repeat the full verification, or `scripts/compare_to_reference.R` to compare fresh output with the references.
+The conformal, Mondrian and CRC summary and calibration files in `results/reference/` were regenerated from the committed code on R 4.6.1 (2026-06-24, Windows) on 2026-11-03 and are byte-identical to the committed CSVs. The efficacy operating-characteristics table was regenerated on the same date, its values match the results report, and it is committed as `efficacy_summary.csv`. Run `scripts/run_all_checks.R` to repeat the full verification, or `scripts/compare_to_reference.R` to compare fresh output with the references.
 
 ## Methods and documentation
 
