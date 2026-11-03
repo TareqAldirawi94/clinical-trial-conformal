@@ -16,7 +16,7 @@ calibrate_mondrian <- function(model, calibration, alpha = 0.10) {
   do.call(rbind, lapply(mondrian_levels(), function(g) {
     scores <- residuals[groups == g]
     n <- length(scores)
-    k <- ceiling((n + 1) * (1 - alpha))
+    k <- conformal_rank(n, alpha)
     data.frame(group = g, n_cal = n, rank = k, alpha = alpha,
                radius = conformal_radius(scores, alpha),
                uninformative = k > n,
