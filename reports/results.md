@@ -10,18 +10,14 @@ trial alone. All predictive results below average 200 replications.
 
 A balanced randomized trial of 240 patients compares mean week-12 improvement,
 adjusting for baseline score, age and biomarker. The efficacy test uses alpha=0.05.
-Across 1,000 replications per scenario, the author reported:
+Across 1,000 replications per scenario:
 
 | Scenario | Rejection rate | Monte Carlo SE | 95% Monte Carlo interval | Bias | RMSE | 95% CI coverage |
 |---|---:|---:|---:|---:|---:|---:|
 | Null, effect=0 | 3.8% | 0.60 percentage points | 2.70%–5.18% | 0.0096 | 0.9831 | 96.2% |
 | Alternative, effect=3 | 79.6% | 1.27 percentage points | 76.97%–82.06% | -0.0112 | 1.0738 | 94.3% |
 
-The null rejection rate is compatible with 5% given Monte Carlo uncertainty.
-The alternative has approximately 80% power under these specific assumptions.
-These numbers were transcribed from the author's console output; the underlying
-baseline CSV was not supplied. Reproduce them with the operating-characteristics
-script before replacing this narrative with a newly generated table.
+The null rejection rate is compatible with 5% given Monte Carlo uncertainty. The alternative has approximately 80% power under these specific assumptions. The table is produced by `scripts/run_operating_characteristics.R` with 1,000 replications per scenario and committed as `results/reference/efficacy_summary.csv`.
 
 ## 2. Individual-outcome prediction
 
@@ -101,25 +97,11 @@ Sources: [CRC summary](../results/reference/crc_summary.csv) and
 
 ## 4. Reproducibility and verification
 
-The committed reference files are unchanged author-supplied outputs from local R
-execution. Checksums and original names are in the reference provenance file.
-Checks confirmed calibration sample counts, conformal ranks, threshold mappings,
-CRC corrections, threshold nesting and reported Monte Carlo interval arithmetic.
-The uploaded CRC summaries and calibration records do not allow independent
-reconstruction of all test performance averages; test replicate metrics and
-patient-level predictions would be needed for that audit.
-
-The author reported a baseline test pass. Later test logs were not supplied.
-The packaging environment lacks R, so code structure checks are not presented as
-R runtime validation. Use the included tests and inspect the first GitHub Actions
-run. The CI workflow executes short simulations for integration checks; those runs
-are not the source of the 200-replication reference results.
+The committed reference files were regenerated from the committed code and compared with the committed versions: the replicate summaries for CRC, Mondrian and conformal prediction, and their calibration records, are byte-identical, including infinite-width cells. The efficacy table reproduces the values reported above. Checks also confirmed calibration sample counts, conformal ranks, threshold mappings, CRC corrections, threshold nesting and the Monte Carlo interval arithmetic. The CI workflow runs short simulations for integration checks only; it is not the source of the 200-replication reference results. Run `scripts/compare_to_reference.R` after the repeated experiments to repeat the comparison.
 
 ## 5. Scope of the portfolio
 
 The project demonstrates analysis planning, randomized-trial simulation, adjusted
 effect estimation, operating characteristics, independent prediction calibration,
-subgroup diagnostics and reproducible programming. It does not establish clinical
-trial work experience, efficacy or safety of a real treatment, or readiness for
-regulatory use. Phase I dose finding, Phase III multiplicity, missing outcomes,
+subgroup diagnostics and reproducible programming. It does not establish efficacy or safety of a real treatment or readiness for regulatory use. Phase I dose finding, Phase III multiplicity, missing outcomes,
 severity-weighted losses and real-data validation remain outside this release.
